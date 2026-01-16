@@ -6,6 +6,11 @@
     <title>Email Signature Builder</title>
 
     <style>
+      :root {
+        --brand-main: #395549;
+        --brand-accent: #ed902d;
+      }
+
       body {
         font-family: Arial, Helvetica, sans-serif;
         margin: 20px;
@@ -17,16 +22,20 @@
       }
       .card {
         border: 1px solid #ddd;
+        border-left: 4px solid var(--brand-accent);
         border-radius: 10px;
         padding: 14px;
       }
       h1 {
-        font-size: 20px;
-        margin-bottom: 10px;
+        font-size: 22px;
+        margin-bottom: 6px;
+        color: var(--brand-main);
       }
+
       h2 {
         font-size: 16px;
         margin: 0 0 8px 0;
+        color: var(--brand-main);
       }
       label {
         display: block;
@@ -54,6 +63,10 @@
         flex: 1;
       }
 
+      .previewShell {
+        background: #fcfefe;
+      }
+
       button {
         padding: 10px 12px;
         border-radius: 10px;
@@ -62,9 +75,12 @@
         cursor: pointer;
       }
       button.primary {
-        background: #111;
+        background: var(--brand-main);
         color: #fff;
-        border-color: #111;
+        border-color: var(--brand-main);
+      }
+      button.primary:hover {
+        background: #2d433c;
       }
       .btnrow {
         display: flex;
@@ -73,9 +89,6 @@
         margin-top: 12px;
       }
 
-      .previewShell {
-        background: #fff;
-      }
       .hint {
         font-size: 12px;
         color: #555;
@@ -195,16 +208,21 @@
 700 W. Virginia St., Suite 604, Milwaukee, WI 53204</textarea
         >
 
-        <div class="btnrow">
-          <button class="primary" id="copyRich">Copy signature</button>
-          <button id="copyHtml">Copy HTML</button>
-          <button id="copyPlain">Copy plain text</button>
+        <div class="btnrow" style="flex-direction: column">
+          <button class="primary" id="copyRich" style="width: 100%">
+            Copy Signature
+          </button>
+
+          <div style="display: flex; gap: 10px; width: 100%">
+            <button id="copyHtml" style="flex: 1">Copy HTML</button>
+            <button id="copyPlain" style="flex: 1">Copy plain text</button>
+          </div>
         </div>
       </div>
 
       <!-- PREVIEW -->
       <div class="card previewShell">
-        <h2>Preview (this is what you copy)</h2>
+        <h2>Preview - Your Signature will look like this</h2>
         <div id="status" class="status"></div>
 
         <div
@@ -217,16 +235,16 @@
           <ul>
             <li>
               <b>Gmail:</b> Settings → See all settings → Signature → New →
-              <b>Copy from Preview window</b> → Paste → Save.
+              <b>Copy Signature (bottom-left button)</b> → Paste → Save.
             </li>
             <li>
               <b>Outlook desktop:</b> File → Options → Mail → Signatures → New →
-              <b>Copy from Preview window</b> → Paste. (Make sure to selected
-              the Outlook-safe variant if using Outlook desktop.)
+              <b>Copy Signature (bottom-left button)</b> → Paste. (Make sure to
+              selected the Outlook-safe variant if using Outlook desktop.)
             </li>
             <li>
               <b>Outlook web:</b> Settings → Mail → Compose → Signature →
-              <b>Copy from Preview window</b> → Paste.
+              <b>Copy Signature (bottom-left button)</b> → Paste.
             </li>
           </ul>
         </div>
@@ -242,13 +260,14 @@
         >
           <h2 style="font-size: 16px; margin: 0 0 6px 0">Need help?</h2>
           <div style="font-size: 13px; color: #333; line-height: 1.4">
-            Contact Nick Hwang at
+            Built for <b>City Forward Collective</b> by Nick Hwang. For
+            questions and help, please email
             <a
               href="mailto:nickthwang@gmail.com"
               style="color: #395549; text-decoration: none; font-weight: bold"
             >
-              nickthwang@gmail.com
-            </a>
+              nickthwang@gmail.com </a
+            >.
           </div>
         </div>
       </div>
