@@ -269,6 +269,11 @@
         cfc: "City Forward Collective Logo",
         action: "City Forward Collective Action Fund Logo",
       };
+      //
+      const DEFAULT_WEBSITES = {
+        cfc: "www.cityforwardcollective.org",
+        action: "www.cfcactionfund.org",
+      };
 
       const $ = (id) => document.getElementById(id);
 
@@ -520,6 +525,23 @@
       $("copyPlain").addEventListener("click", () =>
         navigator.clipboard.writeText($("signaturePreview").innerText)
       );
+      $("sigType").addEventListener("change", () => {
+        const type = $("sigType").value;
+
+        // Only override if current value matches one of the defaults
+        const current = $("website").value.trim();
+
+        if (
+          current === DEFAULT_WEBSITES.cfc ||
+          current === DEFAULT_WEBSITES.action ||
+          current === ""
+        ) {
+          $("website").value = DEFAULT_WEBSITES[type] || current;
+        }
+        render();
+      });
+
+      //
       document
         .querySelectorAll("input,select,textarea")
         .forEach((el) => el.addEventListener("input", render));
