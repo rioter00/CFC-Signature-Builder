@@ -131,13 +131,17 @@
           <option value="outlookSafe">Outlook-safe</option>
         </select>
 
-        <label>Logo URL</label>
-        <div class="minihint">
+        <!-- <label>Logo URL</label> -->
+        <!-- <div class="minihint">
           Logo automatically changes when you switch signature type. You may
           override it if needed.
-        </div>
+        </div> -->
 
-        <input id="logoUrl" value="./assets/city-forward-logo.png" />
+        <!-- <input
+          id="logoUrl"
+          type="hidden"
+          value="./assets/city-forward-logo.png"
+        /> -->
 
         <div class="row">
           <div>
@@ -154,10 +158,10 @@
               logos).
             </div>
           </div>
-          <div>
+          <!-- <div>
             <label>Logo Alt Text</label>
             <input id="logoAlt" value="City Forward Collective" />
-          </div>
+          </div> -->
         </div>
 
         <label>Name</label>
@@ -260,6 +264,10 @@
       const LOGOS = {
         cfc: "./assets/city-forward-logo.png",
         action: "./assets/cfc-action-fund-logo.png",
+      };
+      const LOGO_ALT = {
+        cfc: "City Forward Collective Logo",
+        action: "City Forward Collective Action Fund Logo",
       };
 
       const $ = (id) => document.getElementById(id);
@@ -418,12 +426,16 @@
       }
 
       function getData() {
+        const sigType = $("sigType").value;
+
         return {
-          sigType: $("sigType").value,
+          sigType,
           variant: $("variant").value,
-          logoUrl: $("logoUrl").value,
+
+          logoUrl: LOGOS[sigType],
+          logoAlt: LOGO_ALT[sigType],
           logoWidth: $("logoWidth").value,
-          logoAlt: $("logoAlt").value,
+
           fullName: $("fullName").value,
           pronouns: $("pronouns").value,
           title: $("title").value,
@@ -442,6 +454,8 @@
         $("htmlOut").value = html;
         render.last = { html, plain: $("signaturePreview").innerText };
         saveToStorage(d);
+        //
+        console.log("Logo URL:", d.logoUrl);
 
         // Optional gentle warning in status if above recommended max
         const wNum = Number(d.logoWidth) || 0;
@@ -499,12 +513,6 @@
         }, 900);
       }
 
-      $("sigType").addEventListener("change", () => {
-        const type = $("sigType").value;
-        $("logoUrl").value = LOGOS[type] || $("logoUrl").value;
-        render();
-      });
-
       $("copyRich").addEventListener("click", doCopyRich);
       $("copyHtml").addEventListener("click", () =>
         navigator.clipboard.writeText($("htmlOut").value)
@@ -517,6 +525,7 @@
         .forEach((el) => el.addEventListener("input", render));
 
       loadFromStorage();
+      //   $("logoAlt").value = LOGO_ALT[$("sigType").value] || "";
       render();
     </script>
   </body>
