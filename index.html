@@ -344,6 +344,11 @@
     alt="${esc(alt || "")}">`;
       }
 
+      function isEmpty(val, placeholder) {
+        const v = (val ?? '').toString().trim();
+        return !v || v === placeholder;
+      }
+
       // City Forward layout
       function buildCFC(d) {
         const tightGap = "3px";
@@ -354,16 +359,14 @@
           Math.max(200, Math.min(HARD_MAX, Number(d.logoWidth) || 180)) + 20; // + padding buffer
 
         return `
-<table cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:13px;line-height:1.25;">
+<table cellpadding="0" cellspacing="0" style="font-family:'Trebuchet MS',Arial,sans-serif;font-size:13px;line-height:1.25;">
 <tr>
 <td style="padding-right:12px;vertical-align:top;width:${leftColWidth}px;">
   <table cellpadding="0" cellspacing="0">
 <tr><td style="color:${MAIN_COLOR};font-weight:bold;font-size:16px;">${esc(
           d.fullName
         )}</td></tr>
-<tr><td style="color:${MAIN_COLOR};font-style:italic;font-weight:bold;font-size:13px;padding-top:${tightGap};">${esc(
-          d.pronouns
-        )}</td></tr>
+${isEmpty(d.pronouns, '(Pronouns)') ? '' : `<tr><td style="color:${MAIN_COLOR};font-style:italic;font-weight:bold;font-size:13px;padding-top:${tightGap};">${esc(d.pronouns)}</td></tr>`}
 <tr><td style="color:${MAIN_COLOR};font-size:14px;padding-top:${tightGap};">${esc(
           d.title
         )}</td></tr>
@@ -378,12 +381,8 @@
 
 <td style="padding-left:12px;border-left:2px solid ${DIVIDER_COLOR};vertical-align:top;">
   <table cellpadding="0" cellspacing="0">
-    <tr><td><b style="color:${MAIN_COLOR}">Office:</b> ${tel(
-          d.officePhone
-        )}</td></tr>
-    <tr><td style="padding-top:${tightGap};"><b style="color:${MAIN_COLOR}">Cell:</b> ${tel(
-          d.cellPhone
-        )}</td></tr>
+    ${isEmpty(d.officePhone, 'Office Phone Number') ? '' : `<tr><td><b style="color:${MAIN_COLOR}">Office:</b> ${tel(d.officePhone)}</td></tr>`}
+    ${isEmpty(d.cellPhone, 'Cell Phone Number') ? '' : `<tr><td style="padding-top:${tightGap};"><b style="color:${MAIN_COLOR}">Cell:</b> ${tel(d.cellPhone)}</td></tr>`}
     <tr><td style="padding-top:${tightGap};"><b style="color:${MAIN_COLOR}">Email:</b> ${emailLink(
           d.email
         )}</td></tr>
@@ -408,7 +407,7 @@
           Math.max(200, Math.min(HARD_MAX, Number(d.logoWidth) || 180)) + 20;
 
         return `
-<table cellpadding="0" cellspacing="0" style="font-family:Arial;font-size:13px;line-height:1.25;">
+<table cellpadding="0" cellspacing="0" style="font-family:'Trebuchet MS',Arial,sans-serif;font-size:13px;line-height:1.25;">
 <tr>
 <td style="padding-right:12px;vertical-align:top;width:${leftColWidth}px;">
   <table cellpadding="0" cellspacing="0">
@@ -424,20 +423,14 @@
 <tr><td style="color:${MAIN_COLOR};font-weight:bold;font-size:16px;">${esc(
           d.fullName
         )}</td></tr>
-<tr><td style="color:${MAIN_COLOR};font-style:italic;font-weight:bold;font-size:13px;padding-top:${tightGap};">${esc(
-          d.pronouns
-        )}</td></tr>
+${isEmpty(d.pronouns, '(Pronouns)') ? '' : `<tr><td style="color:${MAIN_COLOR};font-style:italic;font-weight:bold;font-size:13px;padding-top:${tightGap};">${esc(d.pronouns)}</td></tr>`}
 <tr><td style="color:${MAIN_COLOR};font-size:14px;padding-top:${tightGap};">${esc(
           d.title
         )}</td></tr>
 
 
-    <tr><td style="padding-top:${sectionGap};"><b style="color:${MAIN_COLOR}">Office:</b> ${tel(
-          d.officePhone
-        )}</td></tr>
-    <tr><td style="padding-top:${tightGap};"><b style="color:${MAIN_COLOR}">Cell:</b> ${tel(
-          d.cellPhone
-        )}</td></tr>
+    ${isEmpty(d.officePhone, 'Office Phone Number') ? '' : `<tr><td style="padding-top:${sectionGap};"><b style="color:${MAIN_COLOR}">Office:</b> ${tel(d.officePhone)}</td></tr>`}
+    ${isEmpty(d.cellPhone, 'Cell Phone Number') ? '' : `<tr><td style="padding-top:${tightGap};"><b style="color:${MAIN_COLOR}">Cell:</b> ${tel(d.cellPhone)}</td></tr>`}
     <tr><td style="padding-top:${tightGap};"><b style="color:${MAIN_COLOR}">Email:</b> ${emailLink(
           d.email
         )}</td></tr>
